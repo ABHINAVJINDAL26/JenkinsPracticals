@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    stages {
+        stage('Branch Info') {
+            steps {
+                echo "Current Branch : ${env.BRANCH_NAME}"
+            }
+        }
+        stage('Build') {
+            steps {
+                echo "Building Application"
+            }
+        }
+        stage('Deploy') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo "Deploying To Production"
+            }
+        }
+    }
+}
