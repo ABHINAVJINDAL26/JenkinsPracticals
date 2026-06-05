@@ -31,9 +31,9 @@ pipeline {
         stage('Build') {
 
             steps {
-
-                bat 'mvn compile'
-
+                dir('Docker_jenkins') {
+                    bat 'mvn compile'
+                }
             }
 
         }
@@ -41,9 +41,9 @@ pipeline {
         stage('Test') {
 
             steps {
-
-                bat 'mvn test'
-
+                dir('Docker_jenkins') {
+                    bat 'mvn test'
+                }
             }
 
         }
@@ -51,15 +51,15 @@ pipeline {
         stage('Docker Build') {
 
             steps {
+                dir('Docker_jenkins') {
+                    script {
 
-                script {
+                        image = docker.build(
+                            "${IMAGE_NAME}:${IMAGE_TAG}"
+                        )
 
-                    image = docker.build(
-                        "${IMAGE_NAME}:${IMAGE_TAG}"
-                    )
-
+                    }
                 }
-
             }
 
         }
