@@ -10,7 +10,7 @@ pipeline {
 
     environment {
 
-        IMAGE_NAME = "YOUR_DOCKERHUB_USERNAME/studentportal"
+        IMAGE_NAME = "jabhii26/studentportal"
 
         IMAGE_TAG = "${BUILD_NUMBER}"
 
@@ -22,7 +22,11 @@ pipeline {
 
             steps {
 
-                bat 'mvn clean package'
+                dir('Practical07') {
+
+                    bat 'mvn clean package'
+
+                }
 
             }
 
@@ -32,11 +36,15 @@ pipeline {
 
             steps {
 
-                script {
+                dir('Practical07') {
 
-                    docker.build(
-                        "${IMAGE_NAME}:${IMAGE_TAG}"
-                    )
+                    script {
+
+                        docker.build(
+                            "${IMAGE_NAME}:${IMAGE_TAG}"
+                        )
+
+                    }
 
                 }
 
